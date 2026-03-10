@@ -10,4 +10,16 @@
         <maven.compiler.release>17</maven.compiler.release>
         <exec.mainClass>com.example.lab1.Lab1</exec.mainClass>
     </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>com.example.lab1.Lab1</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
