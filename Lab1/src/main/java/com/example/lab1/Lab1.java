@@ -5,7 +5,7 @@ public class Lab1 {
     public static void main(String[] args) {
         Mission mission = new Mission();
         
-                // Основная информация
+        // Основная информация
         mission.setMissionId("M-2024-017");
         mission.setData("2024-10-12");
         mission.setLocation("Токио, район Сибуя");

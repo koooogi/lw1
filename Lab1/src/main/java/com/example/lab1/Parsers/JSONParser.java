@@ -1,13 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.example.lab1.Parsers;
 
-/**
- *
- * @author kortn
- */
-public class JSONParser {
+import com.example.lab1.Mission;
+import java.io.File;
+
+public class JSONParser implements Parsers{
     
+    @Override
+    public Mission parse(File file){
+        Mission mission = new Mission();
+        
+        
+    }
 }

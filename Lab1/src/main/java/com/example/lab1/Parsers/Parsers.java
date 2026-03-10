@@ -4,5 +4,6 @@ import com.example.lab1.Mission;
 import java.io.File;
 
 public interface Parsers {
-    Mission parse(File file);
+    Mission parse(File file) throws Exception;
+    boolean extension(File file);
 }
