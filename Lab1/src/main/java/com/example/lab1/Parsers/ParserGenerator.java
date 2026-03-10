@@ -1,5 +1,5 @@
 package com.example.lab1.Parsers;
 
-public class ParserGenerator {
+public class ParserGenerator implements Parsers{
     
 }

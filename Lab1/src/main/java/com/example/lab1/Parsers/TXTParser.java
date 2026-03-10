@@ -1,5 +1,5 @@
 package com.example.lab1.Parsers;
 
-public class TXTParser {
+public class TXTParser implements Parsers{
     
 }
