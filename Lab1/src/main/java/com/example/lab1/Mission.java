@@ -25,61 +25,61 @@ public class Mission {
     public String getMissionId(){
         return missionId;
     }
-    public void setMissionId(){
+    public void setMissionId(String missionId){
         this.missionId = missionId;
     }
     public String getData(){
         return data;
     }
-    public void setData(){
+    public void setData(String data){
         this.data = data;
     }
     public String getLocation(){
         return location;
     }
-    public void setLocation(){
+    public void setLocation(String location){
         this.location = location;
     }
     public String getOutcome(){
         return outcome;
     }
-    public void setOutcome(){
+    public void setOutcome(String outcome){
         this.outcome = outcome;
     }
     public String getNote(){
         return note;
     }
-    public void setNote(){
+    public void setNote(String note){
         this.note = note;
     }
     public String getComment(){
         return comment;
     }
-    public void setComment(){
+    public void setComment(String comment){
         this.comment = comment;
     }
     public int getDamageCost(){
         return damageCost;
     }
-    public void setDamageCost(){
+    public void setDamageCost(int damageCost){
         this.damageCost = damageCost;
     }
     public Curse getCurse(){
         return curse;
     }
-    public void setCurse(){
+    public void setCurse(Curse curse){
         this.curse = curse;
     }
     public ArrayList<Sorcerer> getSorcerers(){
         return sorcerers;
     }
-    public void setSorcerers(){
+    public void setSorcerers(ArrayList<Sorcerer> sorcerers){
         this.sorcerers = sorcerers;
     }
     public ArrayList<Technique> getTechniques(){
         return techniques;
     }
-    public void setTechniques(){
+    public void setTechniques(ArrayList<Technique> techniques){
         this.techniques = techniques;
     }
     
@@ -97,13 +97,13 @@ public class Mission {
         public String getName(){
             return name;
         }
-        public void setName(){
+        public void setName(String name){
             this.name = name;
         }
         public String getThreatLevel(){
             return threatLevel;
         }
-        public void setThreatLevel(){
+        public void setThreatLevel(String threatLevel){
             this.threatLevel = threatLevel;
         }
     }
@@ -120,13 +120,13 @@ public class Mission {
         public String getName(){
             return name;
         }
-        public void setName(){
+        public void setName(String name){
             this.name = name;
         }
         public String getRank(){
             return rank;
         }
-        public void setRank(){
+        public void setRank(String rank){
             this.rank = rank;
         }
     }
@@ -147,13 +147,13 @@ public class Mission {
         public String getName(){
             return name;
         }
-        public void setName(){
+        public void setName(String name){
             this.name = name;
         }
         public String getType(){
             return type;
         }
-        public void setType(){
+        public void setType(String type){
             this.type = type;
         }
         public Sorcerer getOwner(){
@@ -165,12 +165,28 @@ public class Mission {
         public int getDamage(){
             return damage;
         }
-        public void setDamage(){
+        public void setDamage(int damage){
             this.damage = damage;
         }
     }
     
     public void getReport(){
-        
+        System.out.println("*".repeat(100));
+        System.out.println("*".repeat(100));
+        System.out.println("*".repeat(50) + "MISSION REPORT" + "*".repeat(50));
+        System.out.println("*".repeat(100));
+        System.out.println("*".repeat(100));
+        System.out.println("Mission ID:" + getMissionId());
+        System.out.println("Data:" + getData());
+        System.out.println("Location:" + getLocation());
+        System.out.println("*".repeat(100));
+        System.out.println("*".repeat(50) + "CURSE" + "*".repeat(50));
+        System.out.println("Name:" + curse.getName());
+        System.out.println("Threat level:" + curse.getThreatLevel());
+        System.out.println("*".repeat(100));
+        System.out.println("Sorcerers: ");
+        System.out.println("Techniques: ");
+        System.out.println("Outcome:" + getOutcome());
+        System.out.println("Damage Cost:" + getDamageCost());
     }
 }
