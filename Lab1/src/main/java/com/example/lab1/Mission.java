@@ -12,13 +12,14 @@ public class Mission {
     private String comment;
     private int damageCost;
     
-    ArrayList<Sorcerer> sorcerers;
-    ArrayList<Technique> techniques;
+    private ArrayList<Sorcerer> sorcerers;
+    private ArrayList<Technique> techniques;
     private Curse curse;
     
     public Mission(){
         this.sorcerers = new ArrayList<>();
         this.techniques = new ArrayList<>();
+        this.curse = new Curse();
     }
     
     public String getMissionId(){
@@ -82,9 +83,11 @@ public class Mission {
         this.techniques = techniques;
     }
     
-    public class Curse{
+    public static class Curse{
         private String name;
         private String threatLevel;
+        
+        public Curse(){}
         
         public Curse(String name, String threatLevel){
             this.name = name;
@@ -105,7 +108,7 @@ public class Mission {
         }
     }
     
-    public class Sorcerer{
+    public static class Sorcerer{
         private String name;
         private String rank;
         
@@ -113,18 +116,56 @@ public class Mission {
             this.name = name;
             this.rank = rank;
         }
+        
+        public String getName(){
+            return name;
+        }
+        public void setName(){
+            this.name = name;
+        }
+        public String getRank(){
+            return rank;
+        }
+        public void setRank(){
+            this.rank = rank;
+        }
     }
     
-    public class Technique{
+    public static class Technique{
         private String name;
         private String type;
-        private String owner;
+        private Sorcerer owner;
         private int damage;
         
-        public Technique(String name, String type, String owner, int damage){
+        public Technique(String name, String type, Sorcerer owner, int damage){
             this.name = name;
             this.type = type;
             this.owner = owner;    
+            this.damage = damage;
+        }
+        
+        public String getName(){
+            return name;
+        }
+        public void setName(){
+            this.name = name;
+        }
+        public String getType(){
+            return type;
+        }
+        public void setType(){
+            this.type = type;
+        }
+        public Sorcerer getOwner(){
+            return owner;
+        }
+        public void setOwner(Sorcerer owner){
+            this.owner = owner;
+        }
+        public int getDamage(){
+            return damage;
+        }
+        public void setDamage(){
             this.damage = damage;
         }
     }
