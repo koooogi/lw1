@@ -19,5 +19,7 @@ public class ParserGenerator{
                 return p;
             }
         }
+        System.out.println("No parser made. Valid extensions: XML, TXT, JSON");
+        return null;
     }
 }

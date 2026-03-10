@@ -6,6 +6,13 @@ import java.io.File;
 public class JSONParser implements Parsers{
     
     @Override
+    public boolean extension(File file){
+        String name = file.getName();
+        String l_name = name.toLowerCase();
+        return l_name.endsWith(".json");
+    }
+    
+    @Override
     public Mission parse(File file){
         Mission mission = new Mission();
         
