@@ -81,4 +81,55 @@ public class Mission {
     public void setTechniques(){
         this.techniques = techniques;
     }
+    
+    public class Curse{
+        private String name;
+        private String threatLevel;
+        
+        public Curse(String name, String threatLevel){
+            this.name = name;
+            this.threatLevel = threatLevel;
+        }
+        
+        public String getName(){
+            return name;
+        }
+        public void setName(){
+            this.name = name;
+        }
+        public String getThreatLevel(){
+            return threatLevel;
+        }
+        public void setThreatLevel(){
+            this.threatLevel = threatLevel;
+        }
+    }
+    
+    public class Sorcerer{
+        private String name;
+        private String rank;
+        
+        public Sorcerer(String name, String rank){
+            this.name = name;
+            this.rank = rank;
+        }
+    }
+    
+    public class Technique{
+        private String name;
+        private String type;
+        private String owner;
+        private int damage;
+        
+        public Technique(String name, String type, String owner, int damage){
+            this.name = name;
+            this.type = type;
+            this.owner = owner;    
+            this.damage = damage;
+        }
+    }
+    
+    public void getReport(){
+        
+    }
 }
