@@ -16,6 +16,14 @@ public class JSONParser implements Parsers{
     public Mission parse(File file){
         Mission mission = new Mission();
         
+        if(file == null || !file.exists()){
+            System.out.println("File not found or does not exist");
+            return mission;
+        }
         
+        if(!extension(file)){
+            System.out.println("Invalid extension. File unsupported. Expected: json.");
+            return mission;
+        }
     }
 }
