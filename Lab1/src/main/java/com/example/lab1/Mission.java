@@ -180,18 +180,20 @@ public class Mission {
         System.out.println("Data: " + getData());
         System.out.println("Location: " + getLocation());
         System.out.println("*".repeat(100));
-        System.out.println("*".repeat(50) + "CURSE" + "*".repeat(50));
+        System.out.println("*".repeat(50) + "CURSE" + "*".repeat(45));
+        System.out.println("*".repeat(100));
         System.out.println("Name: " + curse.getName());
         System.out.println("Threat level: " + curse.getThreatLevel());
         System.out.println("*".repeat(100));
-        System.out.println("*".repeat(50) + "SORCERERS" + "*".repeat(50));
+        System.out.println("*".repeat(50) + "SORCERERS" + "*".repeat(41));
+        System.out.println("*".repeat(100));
         for(Sorcerer s : sorcerers){
             System.out.println("Name: " + s.getName());
             System.out.println("Rank: " + s.getRank());
         }
         System.out.println("*".repeat(100));
+        System.out.println("*".repeat(50) + "TECHNIQUES" + "*".repeat(40));
         System.out.println("*".repeat(100));
-        System.out.println("*".repeat(50) + "TECHNIQUES" + "*".repeat(50));
         for(Technique t : techniques){
             System.out.println("Name: " + t.getName());
             System.out.println("Type: " + t.getType());
@@ -199,7 +201,8 @@ public class Mission {
             System.out.println("Damage: " + t.getDamage());
         }
         System.out.println("*".repeat(100));
-        System.out.println("*".repeat(50) + "RESULTS" + "*".repeat(50));
+        System.out.println("*".repeat(50) + "RESULTS" + "*".repeat(43));
+        System.out.println("*".repeat(100));
         System.out.println("Outcome: " + getOutcome());
         System.out.println("Damage Cost: " + getDamageCost());
         if(note != null && !note.isEmpty()){

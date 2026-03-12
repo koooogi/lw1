@@ -14,6 +14,7 @@ public class Lab1 {
         Parsers parser = pg.getParser(file);
         
         Mission mission = parser.parse(file);
+        mission.getReport();
         
     }
 }

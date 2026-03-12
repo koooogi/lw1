@@ -94,7 +94,7 @@ public class TXTParser implements Parsers{
         for(String line: lines){
             String parts[] = line.split(":", 2);
             String key = parts[0].trim().toLowerCase();
-            String value = parts[1].trim().toLowerCase();
+            String value = parts[1].trim();
             info.put(key, value);
         }
         
@@ -112,7 +112,7 @@ public class TXTParser implements Parsers{
         if(info.containsKey("outcome")){
             mission.setOutcome(info.get("outcome"));
         }
-        if(info.containsKey("damageCost")){
+        if(info.containsKey("damagecost")){
             mission.setDamageCost(Integer.parseInt(info.get("damagecost")));
         }
         if(info.containsKey("note")){
@@ -140,10 +140,43 @@ public class TXTParser implements Parsers{
             info.putIfAbsent(index, new HashMap<>());
             info.get(index).put(field, value);
         }
+        
+        for(int i = 0; i < info.size(); i++){
+            Map<String, String> d = info.get(i);
+            String name = d.get("name");
+            String rank = d.get("rank");
+            mission.getSorcerers().add(new Mission.Sorcerer(name, rank));
+        }
     }
     
     public void parseTechnique(ArrayList<String> lines, Mission mission){
+        Map<Integer, Map<String, String>> info = new HashMap<>();
         
+        for(String line : lines){
+            int start = line.indexOf("[") + 1;
+            int end = line.indexOf("]");
+            
+            int index = Integer.parseInt(line.substring(start, end));
+            String scnd = line.substring(end+2);
+            String parts[] = scnd.split(":", 2);
+            
+            String field = parts[0].trim();
+            String value = parts[1].trim();
+            
+            info.putIfAbsent(index, new HashMap<>());
+            info.get(index).put(field, value);
+        }
+        
+        for(int i = 0; i < info.size(); i++){
+            Map<String, String> d = info.get(i);
+            String name = d.get("name");
+            String type = d.get("type");
+            String owner_name = d.get("owner");
+            int damage = Integer.parseInt(d.get("damage"));
+            
+            Mission.Sorcerer owner = findSorcerer(mission, owner_name);
+            mission.getTechniques().add(new Mission.Technique(name, type, owner, damage));
+        }
     }
     
     public void parseCurse(ArrayList<String> lines, Mission mission){
@@ -166,5 +199,14 @@ public class TXTParser implements Parsers{
         if(name != null || lvl != null){
             mission.setCurse(new Mission.Curse(name, lvl));
         }
+    }
+    
+    public Mission.Sorcerer findSorcerer(Mission mission, String owner_name){
+        for(Mission.Sorcerer ms: mission.getSorcerers()){
+            if(owner_name.equals(ms.getName())){
+                return ms;
+            }
+        }
+        return null;
     }
 }
