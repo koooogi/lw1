@@ -25,5 +25,7 @@ public class XMLParser implements Parsers{
             System.out.println("Invalid extension. File unsupported. Expected: uml.");
             return mission;
         }
+        
+        return mission;
     }
 }

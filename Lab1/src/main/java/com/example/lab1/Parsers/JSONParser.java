@@ -25,5 +25,7 @@ public class JSONParser implements Parsers{
             System.out.println("Invalid extension. File unsupported. Expected: json.");
             return mission;
         }
+        
+        return mission;
     }
 }
