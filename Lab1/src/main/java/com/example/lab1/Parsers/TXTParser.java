@@ -127,10 +127,18 @@ public class TXTParser implements Parsers{
         Map<Integer, Map<String, String>> info = new HashMap<>();
         
         for(String line : lines){
-            int start = line.indexOf("[");
+            int start = line.indexOf("[") + 1;
             int end = line.indexOf("]");
             
+            int index = Integer.parseInt(line.substring(start, end));
+            String scnd = line.substring(end+2);
+            String parts[] = scnd.split(":", 2);
             
+            String field = parts[0].trim();
+            String value = parts[1].trim();
+            
+            info.putIfAbsent(index, new HashMap<>());
+            info.get(index).put(field, value);
         }
     }
     
