@@ -37,7 +37,7 @@ public class JSONParser implements Parsers{
         try{
             mission = om.readValue(file, Mission.class);
             findSorcerers(mission);
-        } catch(IOException e){
+        }catch(IOException e){
             System.err.println("Failed parsing of JSON file" + e.getMessage());
         }
         

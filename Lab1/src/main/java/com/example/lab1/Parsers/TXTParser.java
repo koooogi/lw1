@@ -65,26 +65,6 @@ public class TXTParser implements Parsers{
             } 
         }
         
-//        System.out.println("MAIN");
-//        for (String line : mainInfo) {
-//            System.out.println(line);
-//        }
-//        
-//        System.out.println("\nCURSE");
-//        for (String line : curseInfo) {
-//            System.out.println(line);
-//        }
-//        
-//        System.out.println("\nSORCERER");
-//        for (String line : sorcererInfo) {
-//            System.out.println(line);
-//        }
-//        
-//        System.out.println("\nTECHNIQUE");
-//        for (String line : techniqueInfo) {
-//            System.out.println(line);
-//        }
-        
         parseMain(mainInfo, mission);
         parseSorcerer(sorcererInfo, mission);
         parseTechnique(techniqueInfo, mission);
