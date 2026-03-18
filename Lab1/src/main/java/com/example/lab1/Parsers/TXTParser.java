@@ -14,7 +14,6 @@ public class TXTParser implements Parsers{
     
     @Override
     public boolean extension(File file){
-        if(file == null) return false;
         String name = file.getName();
         String l_name = name.toLowerCase();
         return l_name.endsWith(".txt");

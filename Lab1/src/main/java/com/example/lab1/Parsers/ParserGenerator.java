@@ -14,6 +14,9 @@ public class ParserGenerator{
     }
     
     public Parsers getParser(File file){
+        if(file == null){
+            return null;
+        }
         for(Parsers p : parsers){
             if(p.extension(file)){
                 return p;

@@ -11,6 +11,10 @@ public class Lab1 {
         FileManager fm = new FileManager();
         ParserGenerator pg = new ParserGenerator();
         File file = fm.getFile();
+        if(file == null){
+            fm.close();
+            return;
+        }
         Parsers p = pg.getParser(file);
         Mission m = p.parse(file);
         m.getReport();
