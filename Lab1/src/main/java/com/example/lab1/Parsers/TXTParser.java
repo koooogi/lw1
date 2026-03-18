@@ -14,6 +14,7 @@ public class TXTParser implements Parsers{
     
     @Override
     public boolean extension(File file){
+        if (file == null) return false;
         String name = file.getName();
         String l_name = name.toLowerCase();
         return l_name.endsWith(".txt");
@@ -45,6 +46,11 @@ public class TXTParser implements Parsers{
         
         for(String line : parts){
             line = line.trim();
+            
+            if(line.isEmpty()){
+                continue;
+            }
+            
             if(line.startsWith("curse")){
                 curseInfo.add(line);
             }
@@ -89,9 +95,16 @@ public class TXTParser implements Parsers{
     
     public void parseMain(ArrayList<String> lines, Mission mission){
         
+        if (lines == null || lines.isEmpty()) return;
+        
         Map<String, String> info = new HashMap<>();
         
         for(String line: lines){
+            
+            if (line.isEmpty()){
+                continue;
+            }
+            
             String parts[] = line.split(":", 2);
             String key = parts[0].trim().toLowerCase();
             String value = parts[1].trim();
@@ -101,32 +114,110 @@ public class TXTParser implements Parsers{
         //System.out.println(info);
         
         if(info.containsKey("missionid")){
-            mission.setMissionId(info.get("missionid"));
+            String id = info.get("missionid");
+            if(id != null && !id.isEmpty()){
+                mission.setMissionId(id);
+            } 
+            else {
+                mission.setMissionId("EMPTY");
+            }
+        } 
+        else{
+            mission.setMissionId("NOT FOUND");
         }
+        
         if(info.containsKey("date")){
-            mission.setData(info.get("date"));
+            String data = info.get("date");
+            if(data != null && !data.isEmpty()){
+                mission.setData(data);
+            } 
+            else {
+                mission.setData("EMPTY");
+            }
+        } 
+        else{
+            mission.setData("NOT FOUND");
         }
+        
         if(info.containsKey("location")){
-            mission.setLocation(info.get("location"));
+            String loc = info.get("location");
+            if(loc != null && !loc.isEmpty()){
+                mission.setLocation(loc);
+            } 
+            else {
+                mission.setLocation("EMPTY");
+            }
+            
+        } 
+        else{
+            mission.setLocation("NOT FOUND");
         }
+        
         if(info.containsKey("outcome")){
-            mission.setOutcome(info.get("outcome"));
+            String out = info.get("outcome");
+            if(out != null && !out.isEmpty()){
+                mission.setOutcome(out);
+            } 
+            else {
+                mission.setOutcome("EMPTY");
+            }
+        } 
+        else{
+            mission.setOutcome("NOT FOUND");
         }
+        
         if(info.containsKey("damagecost")){
-            mission.setDamageCost(Integer.parseInt(info.get("damagecost")));
+            String d = info.get("damagecost");
+            if(d != null && !d.isEmpty()){
+                mission.setDamageCost(Integer.parseInt(d));
+            } 
+            else{
+                System.err.println("damagecost: empty");
+            }
+        } 
+        else{
+                System.err.println("damagecost: not found");
         }
+        
         if(info.containsKey("note")){
-            mission.setNote(info.get("note"));
+            String note = info.get("note");
+            if (note != null && !note.isEmpty()) {
+                mission.setNote(note);
+            } 
+            else{
+                mission.setNote("EMPTY");
+            }
+        } 
+        else{
+                mission.setNote("NOT FOUND");
         }
+        
         if(info.containsKey("comment")){
-            mission.setComment(info.get("comment"));
+             String comment = info.get("comment");
+            if (comment != null && !comment.isEmpty()) {
+                mission.setComment(comment);
+            } 
+            else{
+                mission.setComment("EMPTY");
+            }
+        } 
+        else{
+                mission.setComment("NOT FOUND");
         }
     }
     
     public void parseSorcerer(ArrayList<String> lines, Mission mission){
+        
+        if (lines == null || lines.isEmpty()) return;
+        
         Map<Integer, Map<String, String>> info = new HashMap<>();
         
         for(String line : lines){
+            
+            if (line.isEmpty()){
+                continue;
+            }
+            
             int start = line.indexOf("[") + 1;
             int end = line.indexOf("]");
             
@@ -145,14 +236,28 @@ public class TXTParser implements Parsers{
             Map<String, String> d = info.get(i);
             String name = d.get("name");
             String rank = d.get("rank");
-            mission.getSorcerers().add(new Mission.Sorcerer(name, rank));
+            
+            if(name != null && !name.isEmpty()){
+                mission.getSorcerers().add(new Mission.Sorcerer(name, rank != null ? rank : "NOT STATED"));
+            } 
+            else{
+                System.err.println("sorcerer " + i + " has no name");
+            }
         }
     }
     
     public void parseTechnique(ArrayList<String> lines, Mission mission){
+        
+        if (lines == null || lines.isEmpty()) return;
+        
         Map<Integer, Map<String, String>> info = new HashMap<>();
         
         for(String line : lines){
+            
+            if (line.isEmpty()){
+                continue;
+            }
+            
             int start = line.indexOf("[") + 1;
             int end = line.indexOf("]");
             
@@ -172,10 +277,28 @@ public class TXTParser implements Parsers{
             String name = d.get("name");
             String type = d.get("type");
             String owner_name = d.get("owner");
-            int damage = Integer.parseInt(d.get("damage"));
+            int damage = 0;
+            
+            String damage_s = d.get("damage");
+            
+            if(name != null && !name.isEmpty()){
+                if(damage_s != null && !damage_s.isEmpty()){
+                try{
+                    damage = Integer.parseInt(damage_s);
+                } catch(Exception e){
+                    System.err.println("Error occured while parsing damage");
+                }
+            }
+            
+            if (type == null || type.isEmpty()) {
+                type = "UNKNOWN";
+            }
             
             Mission.Sorcerer owner = findSorcerer(mission, owner_name);
             mission.getTechniques().add(new Mission.Technique(name, type, owner, damage));
+            } else{
+                System.err.println("technique " + i + " has no name");
+            }
         }
     }
     
@@ -185,14 +308,20 @@ public class TXTParser implements Parsers{
         String lvl = null;
         
         for(String line: lines){
+            
+            if (line.isEmpty()){
+                continue;
+            }
+            
             String parts[] = line.split(":", 2);
             String key = parts[0].trim();
             String value = parts[1].trim();
             
             if(key.equals("curse.name")){
-                name = value;
-            } else if(key.equals("curse.threatLevel")){
-                lvl = value;
+                name = value.isEmpty() ? "EMPTY" : value;
+            } 
+            else if(key.equals("curse.threatLevel")){
+                lvl = value.isEmpty() ? "EMPTY" : value;
             }
         }
         
@@ -202,7 +331,13 @@ public class TXTParser implements Parsers{
     }
     
     public Mission.Sorcerer findSorcerer(Mission mission, String owner_name){
+        
+        if (owner_name == null || owner_name.isEmpty()) {
+            return new Mission.Sorcerer("UNKNOWN", "UNKNOWN");
+        }
+        
         for(Mission.Sorcerer ms: mission.getSorcerers()){
+            
             if(owner_name.equals(ms.getName())){
                 return ms;
             }

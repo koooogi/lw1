@@ -173,7 +173,7 @@ public class Mission {
     public void getReport(){
         System.out.println("*".repeat(100));
         System.out.println("*".repeat(100));
-        System.out.println("*".repeat(50) + "MISSION REPORT" + "*".repeat(50));
+        System.out.println("*".repeat(50) + "MISSION REPORT" + "*".repeat(36));
         System.out.println("*".repeat(100));
         System.out.println("*".repeat(100));
         System.out.println("Mission ID: " + getMissionId());
