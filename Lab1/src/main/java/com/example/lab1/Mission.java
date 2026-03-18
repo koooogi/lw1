@@ -1,11 +1,12 @@
 package com.example.lab1;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 
 public class Mission {
     
     private String missionId;
-    private String data;
+    private String date;
     private String location;
     private String outcome;
     private String note;
@@ -28,11 +29,11 @@ public class Mission {
     public void setMissionId(String missionId){
         this.missionId = missionId;
     }
-    public String getData(){
-        return data;
+    public String getDate(){
+        return date;
     }
-    public void setData(String data){
-        this.data = data;
+    public void setDate(String data){
+        this.date = data;
     }
     public String getLocation(){
         return location;
@@ -112,6 +113,8 @@ public class Mission {
         private String name;
         private String rank;
         
+        public Sorcerer(){}
+        
         public Sorcerer(String name, String rank){
             this.name = name;
             this.rank = rank;
@@ -137,6 +140,8 @@ public class Mission {
         private Sorcerer owner;
         private int damage;
         
+        public Technique(){}
+        
         public Technique(String name, String type, Sorcerer owner, int damage){
             this.name = name;
             this.type = type;
@@ -159,6 +164,10 @@ public class Mission {
         public Sorcerer getOwner(){
             return owner;
         }
+        @JsonProperty("owner")
+        public void setOwnerFromString(String ownerName){
+            this.owner = new Sorcerer(ownerName, null);
+        }
         public void setOwner(Sorcerer owner){
             this.owner = owner;
         }
@@ -177,7 +186,7 @@ public class Mission {
         System.out.println("*".repeat(100));
         System.out.println("*".repeat(100));
         System.out.println("Mission ID: " + getMissionId());
-        System.out.println("Data: " + getData());
+        System.out.println("Data: " + getDate());
         System.out.println("Location: " + getLocation());
         System.out.println("*".repeat(100));
         System.out.println("*".repeat(50) + "CURSE" + "*".repeat(45));

@@ -14,7 +14,7 @@ public class TXTParser implements Parsers{
     
     @Override
     public boolean extension(File file){
-        if (file == null) return false;
+        if(file == null) return false;
         String name = file.getName();
         String l_name = name.toLowerCase();
         return l_name.endsWith(".txt");
@@ -129,14 +129,14 @@ public class TXTParser implements Parsers{
         if(info.containsKey("date")){
             String data = info.get("date");
             if(data != null && !data.isEmpty()){
-                mission.setData(data);
+                mission.setDate(data);
             } 
             else {
-                mission.setData("EMPTY");
+                mission.setDate("EMPTY");
             }
         } 
         else{
-            mission.setData("NOT FOUND");
+            mission.setDate("NOT FOUND");
         }
         
         if(info.containsKey("location")){
@@ -208,13 +208,13 @@ public class TXTParser implements Parsers{
     
     public void parseSorcerer(ArrayList<String> lines, Mission mission){
         
-        if (lines == null || lines.isEmpty()) return;
+        if(lines == null || lines.isEmpty()) return;
         
         Map<Integer, Map<String, String>> info = new HashMap<>();
         
         for(String line : lines){
             
-            if (line.isEmpty()){
+            if(line.isEmpty()){
                 continue;
             }
             
@@ -248,13 +248,13 @@ public class TXTParser implements Parsers{
     
     public void parseTechnique(ArrayList<String> lines, Mission mission){
         
-        if (lines == null || lines.isEmpty()) return;
+        if(lines == null || lines.isEmpty()) return;
         
         Map<Integer, Map<String, String>> info = new HashMap<>();
         
         for(String line : lines){
             
-            if (line.isEmpty()){
+            if(line.isEmpty()){
                 continue;
             }
             
@@ -285,18 +285,18 @@ public class TXTParser implements Parsers{
                 if(damage_s != null && !damage_s.isEmpty()){
                 try{
                     damage = Integer.parseInt(damage_s);
-                } catch(Exception e){
+                }catch(Exception e){
                     System.err.println("Error occured while parsing damage");
                 }
             }
             
-            if (type == null || type.isEmpty()) {
+            if(type == null || type.isEmpty()){
                 type = "UNKNOWN";
             }
             
             Mission.Sorcerer owner = findSorcerer(mission, owner_name);
             mission.getTechniques().add(new Mission.Technique(name, type, owner, damage));
-            } else{
+            }else{
                 System.err.println("technique " + i + " has no name");
             }
         }
@@ -309,7 +309,7 @@ public class TXTParser implements Parsers{
         
         for(String line: lines){
             
-            if (line.isEmpty()){
+            if(line.isEmpty()){
                 continue;
             }
             
@@ -332,7 +332,7 @@ public class TXTParser implements Parsers{
     
     public Mission.Sorcerer findSorcerer(Mission mission, String owner_name){
         
-        if (owner_name == null || owner_name.isEmpty()) {
+        if(owner_name == null || owner_name.isEmpty()){
             return new Mission.Sorcerer("UNKNOWN", "UNKNOWN");
         }
         

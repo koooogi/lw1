@@ -10,6 +10,13 @@
         <maven.compiler.release>17</maven.compiler.release>
         <exec.mainClass>com.example.lab1.Lab1</exec.mainClass>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.2</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>
