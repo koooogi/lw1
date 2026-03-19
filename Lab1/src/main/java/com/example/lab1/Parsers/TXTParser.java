@@ -173,7 +173,7 @@ public class TXTParser implements Parsers{
         
         if(info.containsKey("comment")){
              String comment = info.get("comment");
-            if (comment != null && !comment.isEmpty()) {
+            if(comment != null && !comment.isEmpty()){
                 mission.setComment(comment);
             } 
             else{
@@ -220,7 +220,7 @@ public class TXTParser implements Parsers{
                 mission.getSorcerers().add(new Mission.Sorcerer(name, rank != null ? rank : "NOT STATED"));
             } 
             else{
-                System.err.println("sorcerer " + i + " has no name");
+                mission.getSorcerers().add(new Mission.Sorcerer("UNKNOWN", rank != null ? rank : "NOT STATED"));
             }
         }
     }
@@ -312,6 +312,7 @@ public class TXTParser implements Parsers{
     public Mission.Sorcerer findSorcerer(Mission mission, String owner_name){
         
         if(owner_name == null || owner_name.isEmpty()){
+            System.out.println("bibubu");
             return new Mission.Sorcerer("UNKNOWN", "UNKNOWN");
         }
         
@@ -321,6 +322,6 @@ public class TXTParser implements Parsers{
                 return ms;
             }
         }
-        return null;
+        return new Mission.Sorcerer(owner_name, "UNKNOWN");
     }
 }
