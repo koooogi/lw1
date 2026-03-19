@@ -12,3 +12,19 @@ structured JSON, sometimes XML. They all describe completed missions, but
 look different. The analyst needs to quickly open the file, understand what happened,
 and get a mission summary.
 
+FILES:
+Analyzer_with_dependencies.jar — executable JAR (fat JAR with all dependencies)
+Source code — project source code
+
+TO EXECUTE:
+```bash
+cd C:\path\to\project\Lab1
+java -jar target\Analyzer_with_dependencies.jar
+```
+OR
+```bash
+java -jar C:\path\to\project\Lab1\target\Analyzer_with_dependencies.jar
+```
+
+AUTHOR:
+kogi
