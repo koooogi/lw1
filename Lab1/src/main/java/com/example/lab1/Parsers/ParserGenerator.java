@@ -2,12 +2,13 @@ package com.example.lab1.Parsers;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ParserGenerator{
     
-    private ArrayList<Parsers> parsers = new ArrayList<>();
+    private List<Parsers> parsers = new ArrayList<>();
     
-    public ParserGenerator(){
+    public ParserGenerator(){ //вопрос к производительности
         parsers.add(new TXTParser());
         parsers.add(new XMLParser());
         parsers.add(new JSONParser());

@@ -1,6 +1,6 @@
 package com.example.lab1.Parsers;
 
-import com.example.lab1.Mission;
+import com.example.lab1.Mission.Mission;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TXTParser implements Parsers{
+public class TXTParser extends BaseParser{
     
     @Override
     public boolean extension(File file){
@@ -312,7 +312,6 @@ public class TXTParser implements Parsers{
     public Mission.Sorcerer findSorcerer(Mission mission, String owner_name){
         
         if(owner_name == null || owner_name.isEmpty()){
-            System.out.println("bibubu");
             return new Mission.Sorcerer("UNKNOWN", "UNKNOWN");
         }
         

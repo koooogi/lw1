@@ -1,8 +1,14 @@
 package com.example.lab1;
 
+import com.example.lab1.Mission.Mission;
 import com.example.lab1.Parsers.ParserGenerator;
 import com.example.lab1.Parsers.Parsers;
 import java.io.File;
+
+/**
+ *
+ * @author kogi <astronaut.kogi@gmail.com>
+ */
 
 public class Lab1 {
 
@@ -16,6 +22,9 @@ public class Lab1 {
             return;
         }
         Parsers p = pg.getParser(file);
+        if (p == null) {
+        return;
+        }
         Mission m = p.parse(file);
         m.getReport();
         fm.close();

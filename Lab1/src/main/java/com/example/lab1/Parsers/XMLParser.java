@@ -1,6 +1,6 @@
 package com.example.lab1.Parsers;
 
-import com.example.lab1.Mission;
+import com.example.lab1.Mission.Mission;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import java.io.File;
 import java.io.IOException;

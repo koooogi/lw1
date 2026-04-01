@@ -1,7 +1,8 @@
-package com.example.lab1;
+package com.example.lab1.Mission;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Mission {
     
@@ -13,8 +14,8 @@ public class Mission {
     private String comment;
     private int damageCost;
     
-    private ArrayList<Sorcerer> sorcerers;
-    private ArrayList<Technique> techniques;
+    private List<Sorcerer> sorcerers;
+    private List<Technique> techniques;
     private Curse curse;
     
     public Mission(){
@@ -71,13 +72,13 @@ public class Mission {
     public void setCurse(Curse curse){
         this.curse = curse;
     }
-    public ArrayList<Sorcerer> getSorcerers(){
+    public List<Sorcerer> getSorcerers(){
         return sorcerers;
     }
     public void setSorcerers(ArrayList<Sorcerer> sorcerers){
         this.sorcerers = sorcerers;
     }
-    public ArrayList<Technique> getTechniques(){
+    public List<Technique> getTechniques(){
         return techniques;
     }
     public void setTechniques(ArrayList<Technique> techniques){
@@ -177,51 +178,5 @@ public class Mission {
         public void setDamage(int damage){
             this.damage = damage;
         }
-    }
-    
-    public void getReport(){
-        System.out.println("*".repeat(100));
-        System.out.println("*".repeat(100));
-        System.out.println("*".repeat(50) + "MISSION REPORT" + "*".repeat(36));
-        System.out.println("*".repeat(100));
-        System.out.println("*".repeat(100));
-        System.out.println("Mission ID: " + getMissionId());
-        System.out.println("Data: " + getDate());
-        System.out.println("Location: " + getLocation());
-        System.out.println("*".repeat(100));
-        System.out.println("*".repeat(50) + "CURSE" + "*".repeat(45));
-        System.out.println("*".repeat(100));
-        System.out.println("Name: " + curse.getName());
-        System.out.println("Threat level: " + curse.getThreatLevel());
-        System.out.println("*".repeat(100));
-        System.out.println("*".repeat(50) + "SORCERERS" + "*".repeat(41));
-        System.out.println("*".repeat(100));
-        for(Sorcerer s : sorcerers){
-            System.out.println("Name: " + s.getName());
-            System.out.println("Rank: " + s.getRank());
-        }
-        System.out.println("*".repeat(100));
-        System.out.println("*".repeat(50) + "TECHNIQUES" + "*".repeat(40));
-        System.out.println("*".repeat(100));
-        for(Technique t : techniques){
-            System.out.println("Name: " + t.getName());
-            System.out.println("Type: " + t.getType());
-            System.out.println("Owner: " + t.getOwner().getName());
-            System.out.println("Damage: " + t.getDamage());
-        }
-        System.out.println("*".repeat(100));
-        System.out.println("*".repeat(50) + "RESULTS" + "*".repeat(43));
-        System.out.println("*".repeat(100));
-        System.out.println("Outcome: " + getOutcome());
-        System.out.println("Damage Cost: " + getDamageCost());
-        if(note != null && !note.isEmpty()){
-            System.out.println("Note: " + getNote());
-        }
-        
-        if(comment != null && !comment.isEmpty()){
-            System.out.println("Comment: " + getComment());
-        }
-        System.out.println("*".repeat(100));
-        System.out.println("*".repeat(100));
     }
 }
