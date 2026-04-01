@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 public abstract class BaseParser implements Parsers{
 
     @Override
-    public Mission parse(File file) throws Exception {
+    public Mission parse(File file, MissionBuilder builder) throws Exception {
     
     if(file == null || !file.exists()){
         throw new IOException("File not found or does not exist");
@@ -23,8 +23,6 @@ public abstract class BaseParser implements Parsers{
     
     Path path = Paths.get(file.getPath());
     String text = Files.readString(path);
-    
-    MissionBuilder builder = new MissionBuilder();
     parse(text, builder);
     
     return builder.build();

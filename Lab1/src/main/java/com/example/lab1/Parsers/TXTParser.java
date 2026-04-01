@@ -1,6 +1,7 @@
 package com.example.lab1.Parsers;
 
 import com.example.lab1.Mission.Mission;
+import com.example.lab1.Mission.MissionBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,23 +21,9 @@ public class TXTParser extends BaseParser{
     }
     
     @Override
-    public Mission parse(File file) throws IOException{
-        Mission mission = new Mission();
-        
-        if(file == null || !file.exists()){
-            throw new IOException("File not found or does not exist: " + file);
-        }
-        
-        if(!extension(file)){
-            throw new IOException("Invalid extension. File unsupported. Expected: txt." + file);
-        }
-        
-        Path path = Paths.get(file.getPath());
-        String text = Files.readString(path);
+    public void parse(String text, MissionBuilder builder){
         
         String parts[] = text.split("\\n");
-        
-        //System.out.println(text);
         
         ArrayList<String> mainInfo = new ArrayList<>();
         ArrayList<String> sorcererInfo = new ArrayList<>();
@@ -44,6 +31,7 @@ public class TXTParser extends BaseParser{
         ArrayList<String> curseInfo = new ArrayList<>();
         
         for(String line : parts){
+            
             line = line.trim();
             
             if(line.isEmpty()){
@@ -64,15 +52,13 @@ public class TXTParser extends BaseParser{
             } 
         }
         
-        parseMain(mainInfo, mission);
-        parseSorcerer(sorcererInfo, mission);
-        parseTechnique(techniqueInfo, mission);
-        parseCurse(curseInfo, mission);
-
-        return mission;
+        parseMain(mainInfo, builder);
+        parseSorcerer(sorcererInfo, builder);
+        parseTechnique(techniqueInfo, builder);
+        parseCurse(curseInfo, builder);
     }
     
-    public void parseMain(ArrayList<String> lines, Mission mission){
+    public void parseMain(ArrayList<String> lines, MissionBuilder builder){
         
         if (lines == null || lines.isEmpty()) return;
         
@@ -90,65 +76,63 @@ public class TXTParser extends BaseParser{
             info.put(key, value);
         }
         
-        //System.out.println(info);
-        
         if(info.containsKey("missionid")){
             String id = info.get("missionid");
             if(id != null && !id.isEmpty()){
-                mission.setMissionId(id);
+                builder.setMissionId(id);
             } 
             else {
-                mission.setMissionId("EMPTY");
+                builder.setMissionId("EMPTY");
             }
         } 
         else{
-            mission.setMissionId("NOT FOUND");
+            builder.setMissionId("NOT FOUND");
         }
         
         if(info.containsKey("date")){
             String data = info.get("date");
             if(data != null && !data.isEmpty()){
-                mission.setDate(data);
+                builder.setDate(data);
             } 
             else {
-                mission.setDate("EMPTY");
+                builder.setDate("EMPTY");
             }
         } 
         else{
-            mission.setDate("NOT FOUND");
+            builder.setDate("NOT FOUND");
         }
         
         if(info.containsKey("location")){
             String loc = info.get("location");
             if(loc != null && !loc.isEmpty()){
-                mission.setLocation(loc);
+                builder.setLocation(loc);
             } 
             else {
-                mission.setLocation("EMPTY");
+                builder.setLocation("EMPTY");
             }
             
         } 
         else{
-            mission.setLocation("NOT FOUND");
+            builder.setLocation("NOT FOUND");
         }
         
         if(info.containsKey("outcome")){
             String out = info.get("outcome");
             if(out != null && !out.isEmpty()){
-                mission.setOutcome(out);
+                builder.setOutcome(out);
             } 
             else {
-                mission.setOutcome("EMPTY");
+                builder.setOutcome("EMPTY");
             }
         } 
         else{
-            mission.setOutcome("NOT FOUND");
+            builder.setOutcome("NOT FOUND");
         }
         
         if(info.containsKey("damagecost")){
             String d = info.get("damagecost");
             if(d != null && !d.isEmpty()){
-                mission.setDamageCost(Integer.parseInt(d));
+                builder.setDamageCost(Integer.parseInt(d));
             } 
             else{
                 System.err.println("damagecost: empty");
@@ -161,31 +145,31 @@ public class TXTParser extends BaseParser{
         if(info.containsKey("note")){
             String note = info.get("note");
             if (note != null && !note.isEmpty()) {
-                mission.setNote(note);
+                builder.setNote(note);
             } 
             else{
-                mission.setNote("EMPTY");
+                builder.setNote("EMPTY");
             }
         } 
         else{
-                mission.setNote("NOT FOUND");
+                builder.setNote("NOT FOUND");
         }
         
         if(info.containsKey("comment")){
              String comment = info.get("comment");
             if(comment != null && !comment.isEmpty()){
-                mission.setComment(comment);
+                builder.setComment(comment);
             } 
             else{
-                mission.setComment("EMPTY");
+                builder.setComment("EMPTY");
             }
         } 
         else{
-                mission.setComment("NOT FOUND");
+                builder.setComment("NOT FOUND");
         }
     }
     
-    public void parseSorcerer(ArrayList<String> lines, Mission mission){
+    public void parseSorcerer(ArrayList<String> lines, MissionBuilder builder){
         
         if(lines == null || lines.isEmpty()) return;
         
@@ -217,15 +201,15 @@ public class TXTParser extends BaseParser{
             String rank = d.get("rank");
             
             if(name != null && !name.isEmpty()){
-                mission.getSorcerers().add(new Mission.Sorcerer(name, rank != null ? rank : "NOT STATED"));
+                builder.addSorcerer(new Mission.Sorcerer(name, rank != null ? rank : "NOT STATED"));
             } 
             else{
-                mission.getSorcerers().add(new Mission.Sorcerer("UNKNOWN", rank != null ? rank : "NOT STATED"));
+                builder.addSorcerer(new Mission.Sorcerer("UNKNOWN", rank != null ? rank : "NOT STATED"));
             }
         }
     }
     
-    public void parseTechnique(ArrayList<String> lines, Mission mission){
+    public void parseTechnique(ArrayList<String> lines, MissionBuilder builder){
         
         if(lines == null || lines.isEmpty()) return;
         
@@ -273,15 +257,15 @@ public class TXTParser extends BaseParser{
                 type = "UNKNOWN";
             }
             
-            Mission.Sorcerer owner = findSorcerer(mission, owner_name);
-            mission.getTechniques().add(new Mission.Technique(name, type, owner, damage));
+            Mission.Sorcerer owner = findSorcerer(builder, owner_name);
+            builder.addTechnique(new Mission.Technique(name, type, owner, damage));
             }else{
                 System.err.println("technique " + i + " has no name");
             }
         }
     }
     
-    public void parseCurse(ArrayList<String> lines, Mission mission){
+    public void parseCurse(ArrayList<String> lines, MissionBuilder builder){
         
         String name = null;
         String lvl = null;
@@ -305,22 +289,7 @@ public class TXTParser extends BaseParser{
         }
         
         if(name != null || lvl != null){
-            mission.setCurse(new Mission.Curse(name, lvl));
+            builder.setCurse(new Mission.Curse(name != null ? name : "NOT FOUND", lvl != null ? lvl : "NOT FOUND"));
         }
-    }
-    
-    public Mission.Sorcerer findSorcerer(Mission mission, String owner_name){
-        
-        if(owner_name == null || owner_name.isEmpty()){
-            return new Mission.Sorcerer("UNKNOWN", "UNKNOWN");
-        }
-        
-        for(Mission.Sorcerer ms: mission.getSorcerers()){
-            
-            if(owner_name.equals(ms.getName())){
-                return ms;
-            }
-        }
-        return new Mission.Sorcerer(owner_name, "UNKNOWN");
     }
 }
