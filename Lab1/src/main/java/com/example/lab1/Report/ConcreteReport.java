@@ -2,13 +2,13 @@ package com.example.lab1.Report;
 
 import com.example.lab1.Mission.Mission;
 import com.example.lab1.Mission.MissionBuilder;
-import java.util.List;
 import java.util.Map;
 
 public class ConcreteReport implements ReportStrategy{
 
     @Override
     public String report(Mission mission, MissionBuilder builder) {
+        
         StringBuilder sb = new StringBuilder();
         
         sb.append("*".repeat(100)).append("\n");

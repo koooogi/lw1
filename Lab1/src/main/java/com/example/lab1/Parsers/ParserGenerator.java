@@ -11,7 +11,7 @@ public class ParserGenerator{
     public ParserGenerator(){ //вопрос к производительности
         parsers.add(new TXTParser());
 //        parsers.add(new XMLParser());
-//        parsers.add(new JSONParser());
+        parsers.add(new JSONParser());
 //        parsers.add(new YAMLParser());
 //        parsers.add(new STXTParser());
 //        parsers.add(new NONEParser());

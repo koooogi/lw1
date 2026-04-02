@@ -4,9 +4,12 @@ import com.example.lab1.ENUMs.Outcome;
 import com.example.lab1.ENUMs.Rank;
 import com.example.lab1.ENUMs.TechniqueType;
 import com.example.lab1.ENUMs.ThreatLevel;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Mission {
     
@@ -22,11 +25,14 @@ public class Mission {
     private List<Technique> techniques;
     private Curse curse;
     
+    private Map<String, Object> additions;
+    
     public Mission(){
         this.sorcerers = new ArrayList<>();
         this.techniques = new ArrayList<>();
         this.curse = new Curse();
         this.outcome = Outcome.UNKNOWN;
+        this.additions = new HashMap<>();
     }
     
     public String getMissionId(){
@@ -91,6 +97,19 @@ public class Mission {
     }
     public void setTechniques(ArrayList<Technique> techniques){
         this.techniques = techniques;
+    }
+    public Map<String, Object> getAdditions(){
+        return additions;
+    } 
+    public void setAdditions(Map<String, Object> additions) {
+        this.additions = additions;
+    }
+    @JsonAnySetter
+    public void setAddition(String key, Object value) {
+        if(this.additions == null){
+            this.additions = new HashMap<>();
+        }
+        this.additions.put(key, value);
     }
     
     public static class Curse{
