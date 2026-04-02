@@ -1,5 +1,6 @@
 package com.example.lab1.Mission;
 
+import com.example.lab1.ENUMs.Outcome;
 import com.example.lab1.Mission.Mission.Curse;
 import com.example.lab1.Mission.Mission.Sorcerer;
 import com.example.lab1.Mission.Mission.Technique;
@@ -41,6 +42,11 @@ public class MissionBuilder {
     
     public MissionBuilder setOutcome(String outcome){
         this.outcome = outcome;
+        return this;
+    }
+    
+    public MissionBuilder setOutcome(Outcome outcome){
+        this.outcome = outcome.name();
         return this;
     }
     
