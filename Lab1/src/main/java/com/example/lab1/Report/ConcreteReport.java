@@ -2,6 +2,7 @@ package com.example.lab1.Report;
 
 import com.example.lab1.Mission.Mission;
 import com.example.lab1.Mission.MissionBuilder;
+import java.util.List;
 import java.util.Map;
 
 public class ConcreteReport implements ReportStrategy{
@@ -58,24 +59,40 @@ public class ConcreteReport implements ReportStrategy{
             }
         }
         
-        if (!builder.getAdditions().isEmpty()) {
+        if(!builder.getAdditions().isEmpty()){
             sb.append("\n").append("*".repeat(100)).append("\n");
             sb.append("*".repeat(50)).append("ADDITIONS").append("*".repeat(42)).append("\n");
-            printAdditions(sb, builder.getAdditions());
+            
+            
+            for (Map.Entry<String, Object> entry : builder.getAdditions().entrySet()){
+                String key = entry.getKey();
+                Object value = entry.getValue();
+                
+                sb.append("\n*** ").append(key.toUpperCase()).append(" ***\n");
+//                if(value != null){
+//                    sb.append(value.toString()).append("\n");
+//                }else{
+//                    sb.append("null\n");
+//                }
+                
+                if(value instanceof Map){
+                    Map<String, Object> map = (Map<String, Object>) value;
+                    for(Map.Entry<String, Object> e : map.entrySet()){
+                        sb.append(e.getKey()).append(": ").append(e.getValue()).append("\n");
+                    }
+                }else if(value instanceof List){
+                    List<Object> list = (List<Object>) value;
+                    for(Object item : list){
+                        sb.append(item).append("\n");
+                    }
+                }else{
+                    sb.append(value).append("\n");
+                }
+            }
         }
         
         sb.append("\n").append("*".repeat(100)).append("\n");
         
         return sb.toString();
     }
-    
-    private void printAdditions(StringBuilder sb, Map<String, Object> additions) {
-    for (Map.Entry<String, Object> entry : additions.entrySet()) {
-        sb.append("\n*** ").append(entry.getKey().toUpperCase()).append(" ***\n");
-        String valueStr = entry.getValue().toString();
-        valueStr = valueStr.replace("{", "").replace("}", "");
-        valueStr = valueStr.replace(", ", "\n  ");
-        sb.append("  ").append(valueStr).append("\n");
-    }
-}
 }
