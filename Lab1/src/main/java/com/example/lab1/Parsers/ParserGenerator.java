@@ -14,7 +14,7 @@ public class ParserGenerator{
         parsers.add(new XMLParser());
         parsers.add(new JSONParser());
         parsers.add(new YAMLParser());
-//        parsers.add(new NONEParser());
+        parsers.add(new NONEParser());
     }
     
     public Parsers getParser(File file){
