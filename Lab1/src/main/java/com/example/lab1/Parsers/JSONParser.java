@@ -30,8 +30,10 @@ public class JSONParser extends BaseParser{
     public void parse(String text, MissionBuilder builder){
         
         try{
-            //BASE
+            
             Mission mission0 = om.readValue(text, Mission.class);
+            
+            //BASE
             Map<String, String> infoBase = new HashMap<>();
             infoBase.put("missionId", mission0.getMissionId());
             infoBase.put("date", mission0.getDate());

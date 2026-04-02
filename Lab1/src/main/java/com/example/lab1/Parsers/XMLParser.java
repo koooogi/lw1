@@ -1,83 +1,92 @@
-//package com.example.lab1.Parsers;
-//
-//import com.example.lab1.Mission.Mission;
-//import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-//import java.io.File;
-//import java.io.IOException;
-//
-//public class XMLParser implements Parsers{
-//    
-//    private XmlMapper xm;
-//    
-//    public XMLParser(){
-//        this.xm = new XmlMapper(); 
-//    }
-//    
-//    @Override
-//    public boolean extension(File file){
-//        if(file == null){
-//            return false;
-//        }
-//        String name = file.getName();
-//        String l_name = name.toLowerCase();
-//        return l_name.endsWith(".xml");
-//    }
-//    
-//    @Override
-//    public Mission parse(File file){
-//        Mission mission = new Mission();
-//        
-//        if(file == null || !file.exists()){
-//            System.out.println("File not found or does not exist");
-//            return mission;
-//        }
-//        
-//        if(!extension(file)){
-//            System.out.println("Invalid extension. File unsupported. Expected: uml.");
-//            return mission;
-//        }
-//        
-//        try{
-//            mission = xm.readValue(file, Mission.class);
-//            findSorcerers(mission);
-//        }catch(IOException e){
-//            System.err.println("Failed parsing of XML file" + e.getMessage());
-//        }
-//        
-//        return mission;
-//    }
-//    
-//    private void findSorcerers(Mission mission){
-//        
-//        if(mission.getTechniques() == null || mission.getTechniques().isEmpty()){
-//            return;
-//        }
-//        
-//        if(mission.getSorcerers() == null || mission.getSorcerers().isEmpty()){
-//            for(Mission.Technique mt : mission.getTechniques()){
-//                    Mission.Sorcerer owner = mt.getOwner();
-//                    if(owner != null && owner.getName() != null){
-//                        String ownerName = owner.getName();
-//                        mt.setOwner(new Mission.Sorcerer(ownerName, "UNKNOWN"));
-//                    } 
-//                    else{
-//                        mt.setOwner(new Mission.Sorcerer("UNKNOWN", "UNKNOWN"));
-//                    }
-//            }
-//        }
-//        
-//        for(Mission.Technique mt : mission.getTechniques()){
-//            Mission.Sorcerer owner = mt.getOwner();
-//            if(owner != null && owner.getName() != null){
-//                String name = owner.getName();
-//            
-//                for(Mission.Sorcerer ms : mission.getSorcerers()){
-//                    if(ms != null && name.equals(ms.getName())){
-//                        mt.setOwner(ms);
-//                        break;
-//                    }
-//                }
-//            }
-//        }  
-//    }
-//}
+package com.example.lab1.Parsers;
+
+import com.example.lab1.Mission.Mission;
+import com.example.lab1.Mission.MissionBuilder;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+public class XMLParser extends BaseParser{
+    
+    private XmlMapper xm;
+    
+    public XMLParser(){
+        this.xm = new XmlMapper(); 
+    }
+    
+    @Override
+    public boolean extension(File file){
+        if(file == null){
+            return false;
+        }
+        String name = file.getName();
+        String l_name = name.toLowerCase();
+        return l_name.endsWith(".xml");
+    }
+    
+    @Override
+    public void parse(String text, MissionBuilder builder){
+        
+        try{
+            
+            Mission mission0 = xm.readValue(text, Mission.class);
+            
+            //BASE
+            Map<String, String> infoBase = new HashMap<>();
+            infoBase.put("missionId", mission0.getMissionId());
+            infoBase.put("date", mission0.getDate());
+            infoBase.put("location", mission0.getLocation());
+            infoBase.put("outcome", mission0.getOutcome().name());
+            infoBase.put("damagecost", String.valueOf(mission0.getDamageCost()));
+            infoBase.put("note", mission0.getNote());
+            infoBase.put("comment", mission0.getComment());
+            
+            validateBase(builder, infoBase);
+            
+            //CURSE
+            validateCurse(builder, mission0.getCurse().getName(), mission0.getCurse().getThreatLevel().name());
+            
+            //SORCERER
+            Map<Integer, Map<String, String>> infoSor = new HashMap<>();
+            if (mission0.getSorcerers() != null) {
+                for (int i = 0; i < mission0.getSorcerers().size(); i++) {
+                    Mission.Sorcerer s = mission0.getSorcerers().get(i);
+                    Map<String, String> d = new HashMap<>();
+                    d.put("name", s.getName());
+                    d.put("rank", s.getRank().name());
+                    infoSor.put(i, d);
+                }
+            }
+            validateSorcerer(builder, infoSor);
+            
+            //TECHNIQUE
+            Map<Integer, Map<String, String>> infoTech = new HashMap<>();
+            if (mission0.getTechniques() != null) {
+                for (int i = 0; i < mission0.getTechniques().size(); i++) {
+                    Mission.Technique t = mission0.getTechniques().get(i);
+                    Map<String, String> data = new HashMap<>();
+                    data.put("name", t.getName());
+                    data.put("type", t.getType().name());
+                    data.put("owner", t.getOwner().getName());
+                    data.put("damage", String.valueOf(t.getDamage()));
+                    infoTech.put(i, data);
+                }
+            }
+            validateTechnique(builder, infoTech);
+            
+            //ADDITION
+            if(mission0.getAdditions() != null && !mission0.getAdditions().isEmpty()){
+                for(Map.Entry<String, Object> entry : mission0.getAdditions().entrySet()){
+                builder.putAddition(entry.getKey(), entry.getValue());
+            }
+        }    
+            
+        }catch(IOException e){
+            System.err.println("Failed parsing of XML file" + e.getMessage());
+        }               
+    }
+    
+
+}
