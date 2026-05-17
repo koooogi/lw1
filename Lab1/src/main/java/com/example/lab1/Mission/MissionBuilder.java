@@ -1,9 +1,10 @@
 package com.example.lab1.Mission;
 
+import com.example.lab1.Model.Mission;
 import com.example.lab1.ENUMs.Outcome;
-import com.example.lab1.Mission.Mission.Curse;
-import com.example.lab1.Mission.Mission.Sorcerer;
-import com.example.lab1.Mission.Mission.Technique;
+import com.example.lab1.Model.Mission.Curse;
+import com.example.lab1.Model.Mission.Sorcerer;
+import com.example.lab1.Model.Mission.Technique;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

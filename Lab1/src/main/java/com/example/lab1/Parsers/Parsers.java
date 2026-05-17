@@ -1,6 +1,6 @@
 package com.example.lab1.Parsers;
 
-import com.example.lab1.Mission.Mission;
+import com.example.lab1.Model.Mission;
 import com.example.lab1.Mission.MissionBuilder;
 import java.io.File;
 

@@ -1,4 +1,4 @@
-package com.example.lab1.Mission;
+package com.example.lab1.Model;
 
 import com.example.lab1.ENUMs.Outcome;
 import com.example.lab1.ENUMs.Rank;
