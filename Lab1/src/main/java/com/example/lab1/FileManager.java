@@ -3,7 +3,7 @@ package com.example.lab1;
 import java.io.File;
 import java.util.Scanner;
 
-public class FileManager {
+public class FileManager{
     
     private Scanner s;
     

@@ -169,7 +169,7 @@ public class Mission {
         }
         public void setRank(String rank){
             this.rank = Rank.fromString(rank);
-        }
+        }   
     }
     
     public static class Technique{

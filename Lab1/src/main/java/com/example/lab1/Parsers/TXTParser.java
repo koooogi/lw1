@@ -1,13 +1,19 @@
 package com.example.lab1.Parsers;
 
-import com.example.lab1.Mission.Mission;
 import com.example.lab1.Mission.MissionBuilder;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class TXTParser extends BaseParser{
+    
+    private static final Set<String> BASE_KEYS = Set.of(
+        "missionid", "date", "location", "outcome", 
+        "damagecost", "note", "comment"
+    );
     
     @Override
     public boolean extension(File file){
@@ -28,6 +34,7 @@ public class TXTParser extends BaseParser{
         ArrayList<String> sorcererInfo = new ArrayList<>();
         ArrayList<String> techniqueInfo = new ArrayList<>();
         ArrayList<String> curseInfo = new ArrayList<>();
+        Map<String, List<String>> additionsMap = new HashMap<>();
         
         for(String line : parts){
             
@@ -47,14 +54,26 @@ public class TXTParser extends BaseParser{
                 techniqueInfo.add(line);
             } 
             else if(line.contains(":")){
-                mainInfo.add(line);
-            } 
+                String key = line.split(":", 2)[0].trim().toLowerCase();
+                
+                if(BASE_KEYS.contains(key)){
+                    mainInfo.add(line);
+                }else{
+                    String additionKey = key.split("\\[")[0];
+                    if(additionKey.contains(".")){
+                        additionKey = additionKey.split("\\.")[0];
+                    }
+                    additionsMap.putIfAbsent(additionKey, new ArrayList<>());
+                    additionsMap.get(additionKey).add(line);
+                } 
+            }
         }
         
         parseMain(mainInfo, builder);
         parseSorcerer(sorcererInfo, builder);
         parseTechnique(techniqueInfo, builder);
         parseCurse(curseInfo, builder);
+        parseAdditions(additionsMap, builder);
     }
     
     public void parseMain(ArrayList<String> lines, MissionBuilder builder){
@@ -160,5 +179,28 @@ public class TXTParser extends BaseParser{
         }
         
         validateCurse(builder, name, lvl);
+    }
+    
+    private void parseAdditions(Map<String, List<String>> additionsMap, MissionBuilder builder){
+        if(additionsMap == null || additionsMap.isEmpty()){
+            return;
+        } 
+        
+        for(Map.Entry<String, List<String>> entry : additionsMap.entrySet()){
+            String key = entry.getKey();
+            List<String> lines = entry.getValue();
+            Map<String, String> data = new HashMap<>();
+            
+            for(String line : lines){
+                String[] parts = line.split(":", 2);
+                if(parts.length == 2){
+                    data.put(parts[0].trim(), parts[1].trim());
+                }
+            }
+            
+            if(!data.isEmpty()){
+                builder.putAddition(key, data);
+            }
+        }
     }
 }

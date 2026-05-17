@@ -46,8 +46,8 @@ public abstract class BaseParser implements Parsers{
     
     public void validateBase(MissionBuilder builder, Map<String, String> info){
         
-        if(info.containsKey("missionId")){
-            String id = info.get("missionId");
+        if(info.containsKey("missionid")){
+            String id = info.get("missionid");
             if(id != null && !id.isEmpty()){
                 builder.setMissionId(id);
             } 

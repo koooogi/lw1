@@ -39,7 +39,7 @@ public class JSONParser extends BaseParser{
             infoBase.put("date", mission0.getDate());
             infoBase.put("location", mission0.getLocation());
             infoBase.put("outcome", mission0.getOutcome().name());
-            infoBase.put("damagecost", String.valueOf(mission0.getDamageCost()));
+            infoBase.put("damageCost", String.valueOf(mission0.getDamageCost()));
             infoBase.put("note", mission0.getNote());
             infoBase.put("comment", mission0.getComment());
             

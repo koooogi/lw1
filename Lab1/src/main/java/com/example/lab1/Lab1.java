@@ -17,8 +17,9 @@ public class Lab1 {
 
     public static void main(String[] args) throws Exception {   
         
+        FileManager fm = new FileManager();
+        
         try{
-            FileManager fm = new FileManager();
             ParserGenerator pg = new ParserGenerator();
             File file = fm.getFile();
             if(file == null || !file.exists()){
@@ -27,7 +28,7 @@ public class Lab1 {
             }
             Parsers parser = pg.getParser(file);
             if (parser == null){
-                System.out.println("No parser made. Valid extensions: XML, TXT, JSON");
+                System.out.println("No parser made. Valid extensions: XML, TXT, JSON, YAML");
                 return;
             }
             
@@ -40,6 +41,10 @@ public class Lab1 {
         }catch(Exception e){
             System.err.println("Error occured: " + e.getMessage());
             e.printStackTrace();
+        }finally{
+            if(fm != null){
+                fm.close();
+            }
         }
     }
 }
